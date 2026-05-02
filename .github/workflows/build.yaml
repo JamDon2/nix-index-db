@@ -1,0 +1,64 @@
+name: Build nix-index database
+
+on:
+  schedule:
+    - cron: '0 12 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Expand swap to 10G
+        run: |
+          export SWAP_FILE=$(swapon --show=NAME --noheadings | tail -n 1)
+          sudo swapoff "$SWAP_FILE"
+          sudo rm "$SWAP_FILE"
+          sudo fallocate -l 10G "$SWAP_FILE"
+          sudo chmod 600 "$SWAP_FILE"
+          sudo mkswap "$SWAP_FILE"
+          sudo swapon "$SWAP_FILE"
+          free -h
+
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Set release tag
+        id: tag
+        run: echo "tag=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+      - name: Build nix-index database
+        run: |
+          nix run github:NixOS/nixpkgs/nixos-unstable#nix-index -- \
+            --db ./db --system x86_64-linux
+          mv ./db/files ./index-x86_64-linux
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.tag.outputs.tag }}" \
+            --title "${{ steps.tag.outputs.tag }}" \
+            --notes "Weekly nix-index database for nixos-unstable" \
+            ./index-x86_64-linux
+
+      - name: Update flake.nix and re-lock
+        run: |
+          sed -i "s|releases/download/[^/]*/|releases/download/${{ steps.tag.outputs.tag }}/|" flake.nix
+          rm -f flake.lock
+          nix flake lock
+
+      - name: Commit and push lock
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add flake.nix flake.lock
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update db to ${{ steps.tag.outputs.tag }}"
+            git push
+          fi
