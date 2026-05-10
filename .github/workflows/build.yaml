@@ -2,7 +2,7 @@ name: Build nix-index database
 
 on:
   schedule:
-    - cron: '0 12 * * 0'
+    - cron: "0 12 * * 0"
   workflow_dispatch:
 
 permissions:
@@ -46,11 +46,11 @@ jobs:
             --title "${{ steps.tag.outputs.tag }}" \
             --notes "Weekly nix-index database for nixos-unstable" \
             ./index-x86_64-linux
+          sleep 30 # wait for asset to become available
 
       - name: Update flake.nix and re-lock
         run: |
           sed -i "s|releases/download/[^/]*/|releases/download/${{ steps.tag.outputs.tag }}/|" flake.nix
-          rm -f flake.lock
           nix flake lock
 
       - name: Commit and push lock
