@@ -3,13 +3,13 @@
     "db-file": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ZtFUc3kKOQdPoW3C92HfGTXH7YRJRWtPWPd4MQGY3gY=",
+        "narHash": "sha256-htd5wwcPP0P0lEPn7HDYzxCe9L2m98Nj/Zc4uJ6QS7s=",
         "type": "file",
-        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-05-17/index-x86_64-linux"
+        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-05-24/index-x86_64-linux"
       },
       "original": {
         "type": "file",
-        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-05-17/index-x86_64-linux"
+        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-05-24/index-x86_64-linux"
       }
     },
     "root": {
