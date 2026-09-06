@@ -3,7 +3,7 @@
 
   inputs = {
     db-file = {
-      url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-08-30/index-x86_64-linux";
+      url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-09-06/index-x86_64-linux";
       flake = false;
     };
   };
