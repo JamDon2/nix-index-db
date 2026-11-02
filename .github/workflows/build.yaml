@@ -35,7 +35,10 @@ jobs:
       - name: Build nix-index database
         run: |
           nix run github:NixOS/nixpkgs/nixos-unstable#nix-index -- \
-            --db ./db --system x86_64-linux
+            --db ./db --system x86_64-linux \
+            --extra-scopes haskellPackages \
+            --extra-scopes rPackages \
+            --extra-scopes texlive.pkgs
           mv ./db/files ./index-x86_64-linux
 
       - name: Create release
