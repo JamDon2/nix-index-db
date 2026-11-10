@@ -3,11 +3,11 @@
 
   inputs = {
     index-x86_64-linux = {
-      url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-08/index-x86_64-linux";
+      url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-10/index-x86_64-linux";
       flake = false;
     };
     index-aarch64-linux = {
-      url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-08/index-aarch64-linux";
+      url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-10/index-aarch64-linux";
       flake = false;
     };
   };

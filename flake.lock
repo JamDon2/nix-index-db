@@ -1,20 +1,33 @@
 {
   "nodes": {
-    "db-file": {
+    "index-aarch64-linux": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-EGGrzk/UksSKv+Fjh4PlNXioGjzlxvQcTDs5LcrBTW0=",
+        "narHash": "sha256-orkyZ2skbOahKI5u7UQcBK4Ib/MPg+i1mRWM3yKXDzM=",
         "type": "file",
-        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-08/index-x86_64-linux"
+        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-10/index-aarch64-linux"
       },
       "original": {
         "type": "file",
-        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-08/index-x86_64-linux"
+        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-10/index-aarch64-linux"
+      }
+    },
+    "index-x86_64-linux": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-r64/eDmqYFZhpEZFa8cxX7xUXQK2v6kevI3YTGF8BEc=",
+        "type": "file",
+        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-10/index-x86_64-linux"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-10/index-x86_64-linux"
       }
     },
     "root": {
       "inputs": {
-        "db-file": "db-file"
+        "index-aarch64-linux": "index-aarch64-linux",
+        "index-x86_64-linux": "index-x86_64-linux"
       }
     }
   },
