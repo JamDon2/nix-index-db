@@ -1,19 +1,29 @@
 {
-  description = "Weekly prebuilt nix-index database for nixos-unstable (x86_64-linux)";
+  description = "Weekly prebuilt nix-index database for nixos-unstable";
 
   inputs = {
-    db-file = {
+    index-x86_64-linux = {
       url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-08/index-x86_64-linux";
+      flake = false;
+    };
+    index-aarch64-linux = {
+      url = "https://github.com/JamDon2/nix-index-db/releases/download/2026-11-08/index-aarch64-linux";
       flake = false;
     };
   };
 
   outputs =
-    { self, db-file }:
-    {
-      packages.x86_64-linux.default = builtins.path {
-        name = "nix-index-db";
-        path = db-file;
+    inputs:
+    let
+      db = system: {
+        default = builtins.path {
+          name = "nix-index-db";
+          path = inputs."index-${system}";
+        };
       };
+    in
+    {
+      packages.x86_64-linux = db "x86_64-linux";
+      packages.aarch64-linux = db "aarch64-linux";
     };
 }
